@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-
+import tablas from "./src/controller/tablasController.js";
 import usuarios from "./src/routes/usuariosRoutes.js";
 import lenguaje_usuario from "./src/routes/lenguaje_usuarioRoutes.js"
 
