@@ -10,8 +10,9 @@
   --starship: #00ffee;
   --heavyMetal: #292836;
   --drover: #c6fffe;
-  --sycamore: #3c8c8c;
+  --sycamore: #4c738f;
   --white: #fff;
+  --error: rgb(255, 31, 43);
   --max-width: 1400px;
   --padding: 10px;
   --margin: 10px;
@@ -173,15 +174,10 @@ button:hover {
   background: var(--heavyMetal);
   color: var(--starship);
 }
-/* .avisoError{
-  color: red;
-  font-size: 14px;
-  border: 2px solid red;
-} */
 .error{
   border-width: 3px;
   border-style: solid;
-  border-color: red;
+  border-color: var(--error)
 }
 
 select{
@@ -230,7 +226,7 @@ input[type="checkbox"]{
 }
 .avisoError
 {
-  color: red;
+  color: var(--error);
   font-size: 13px;
 }
 .form_detalle{
@@ -261,5 +257,19 @@ input[type="checkbox"]{
   margin: auto;
   font-weight: bold;
   font-size: larger;
+  color: var(--sycamore);
+}
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid var(--starship);
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--starship);
   color: var(--sycamore);
 }
