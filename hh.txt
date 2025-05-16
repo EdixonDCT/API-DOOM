@@ -1,0 +1,50 @@
+Versión corregida de tu package.json:
+json
+Copiar
+Editar
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "Servidor para pruebas en el SENA",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.2",
+    "mysql2": "^3.14.0",
+    "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.4"
+  },
+  "resolutions": {
+    "iconv-lite": "^0.6.3"
+  }
+}
+🔄 ¿Qué hacer ahora?
+Guarda este archivo corregido.
+
+Borra la carpeta node_modules y package-lock.json si existen:
+
+bash
+Copiar
+Editar
+rm -rf node_modules package-lock.json
+Luego reinstala con:
+
+bash
+Copiar
+Editar
+npm install --legacy-peer-deps
