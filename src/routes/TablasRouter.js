@@ -4,9 +4,7 @@ import TablasController from "../controller/tablasController.js";
 class rutas_genericas {
   constructor(tabla){
     this.tabla=tabla;
-  }
-  rutas(){
-    try {
+  
       const router = express.Router();
       const controller = new TablasController(this.tabla);
       
@@ -26,7 +24,7 @@ class rutas_genericas {
     } catch (error) {
       console.log("error en el router "+ error);
       
-    }
+    
   }
 
 }

@@ -19,15 +19,15 @@ try {
   app.use("/usuarios", usuarios);
   app.use("/lenguaje_usuario", lenguaje_usuario);
   
-  const generos = new rutas_genericas("generos");
-  app.use("/generos",generos.rutas());
+  // const generos = new rutas_genericas("generos");
+  app.use("/generos",new rutas_genericas("generos"));
   
-  const ciudades = new rutas_genericas("ciudades");
-  app.use("/ciudades", ciudades.rutas());
+  // const ciudades = new rutas_genericas("ciudades");
+  app.use("/ciudades", new rutas_genericas("ciudades"));
   
-  const lenguajes = new rutas_genericas("lenguajes");
+  // const lenguajes = new rutas_genericas("lenguajes");
   
-  app.use("/lenguajes", lenguajes.rutas());
+  app.use("/lenguajes", new rutas_genericas("lenguajes"));
 } catch (error) {
   console.log(error);
   

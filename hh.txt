@@ -1,86 +1,14 @@
-Versión corregida de tu package.json:
-json
-Copiar
-Editar
-{
-  "name": "server",
-  "version": "1.0.0",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "description": "Servidor para pruebas en el SENA",
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.2",
-    "mysql2": "^3.14.0",
-    "nodemon": "^3.1.9"
-  },
-  "devDependencies": {
-    "json-server": "^0.17.4"
-  },
-  "resolutions": {
-    "iconv-lite": "^0.6.3"
-  }
-}
-🔄 ¿Qué hacer ahora?
-Guarda este archivo corregido.
 
-Borra la carpeta node_modules y package-lock.json si existen:
-
-bash
-Copiar
-Editar
 rm -rf node_modules package-lock.json
-Luego reinstala con:
-
-bash
-Copiar
-Editar
 npm install --legacy-peer-deps
 
 
 
 
-
-
 Error: Cannot find module './extend-node'
-Require stack:
-- D:\API-DOOM\node_modules\iconv-lite\lib\index.js
-...
-significa que falta un archivo dentro del paquete iconv-lite, específicamente extend-node.js, el cual es requerido por iconv-lite y usado por body-parser.
 
-✅ Posibles causas:
-Instalación corrupta de dependencias – probablemente algo salió mal al instalar los node_modules.
-
-Versión incompatible de iconv-lite con Node.js 22 – algunas versiones de paquetes no están listas aún para Node 22.
-
-El paquete iconv-lite fue modificado o truncado localmente.
-
-✅ Soluciones:
-1. Reinstala completamente tus dependencias
-Ejecuta esto en tu terminal desde la raíz del proyecto:
-
-bash
-Copiar
-Editar
 rm -rf node_modules package-lock.json
 npm cache clean --force
 npm install
-Esto:
-
-Borra los módulos corruptos
-
-Limpia la caché de paquetes
-
-Reinstala todo limpio y actualizado
+nvm install 20
+nvm use 20
