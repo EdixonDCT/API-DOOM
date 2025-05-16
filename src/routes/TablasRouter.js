@@ -1,20 +1,21 @@
 import express from "express";
-import tablasController from "../controller/tablasController.js";
+import TablasController from "../controller/tablasController.js";
 
-  
+function rutas_genericas(tabla) {
+  const router = express.Router();
+  const controller = new TablasController(tabla);
 
-const router = express.Router();
+  router.get('/', controller.getAll);
+  router.get('/:id', controller.getById);
 
-router.get('/', tablasController.getAlltablas);
-router.get('/:id', tablasController.getAlltablas);
+  router.post('/', controller.create);
 
+  router.put('/:id', controller.update);
+  router.patch('/:id', controller.update);
 
-router.post('/',  tablasController.createtablas);
+  router.delete('/:id', controller.delete);
 
-router.put('/:id',  tablasController.updatetablas);
+  return router;
+}
 
-router.patch('/:id',  tablasController.updatetablas);
-
-router.delete('/:id', tablasController.deletetablas);
-
-export default router;
+export default rutas_genericas;

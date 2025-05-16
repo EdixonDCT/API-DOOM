@@ -1,32 +1,28 @@
 import express from "express";
-// import multer from "multer";
 import dotenv from "dotenv";
 import cors from "cors";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import tablas from "./src/controller/tablasController.js";
+import rutas_genericas from "./src/routes/TablasRouter.js";
 import usuarios from "./src/routes/usuariosRoutes.js";
-import lenguaje_usuario from "./src/routes/lenguaje_usuarioRoutes.js"
+import lenguaje_usuario from "./src/routes/lenguaje_usuarioRoutes.js";
 
 dotenv.config();
 
-// Crear la instancia de Express
 const app = express();
-// Middleware
-// Habilita CORS
-app.use(cors()); 
-// Permite que la app acepte datos JSON
-app.use(bodyParser.json()); 
-// app.use(express.json());
-// Permite el envio de datos de tipo utlencode
+
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// Permite manejar cookies en las respuestas.
 app.use(cookieParser());
-// Rutas
 
 app.use("/usuarios", usuarios);
 app.use("/lenguaje_usuario", lenguaje_usuario);
+app.use("/generos", rutas_genericas("generos"));
+app.use("/ciudades", rutas_genericas("ciudades"));
+app.use("/lenguajes", rutas_genericas("lenguajes"));
 
-app.listen(3000, () => {
-  console.log("Api Usuarios");
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Api Usuarios corriendo en puerto ${PORT}`);
 });

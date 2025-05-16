@@ -1,49 +1,35 @@
-import connection from `../utils/database.js`;
+import connection from "../utils/database.js";
+
+const tablasPermitidas = ["usuarios", "generos", "ciudades", "lenguajes"];
 
 
 class Tablas {
-  
-  static async findByUser(usuario) {
-    const [rows] = await db.query(`SELECT * FROM ${tabla} WHERE usuario = ?`, [
-      usuario,
-    ]);
-    return rows[0];
-  }
-
-  
-  static async updateRefreshToken(id, refreshToken) {
-    await db.query(`UPDATE ${tabla} SET refresh_token = ? WHERE id = ?`, [
-      refreshToken,
-      id,
-    ]);
-  }
-  
-  async getAll() {
+  async getAll(tabla) {
+    if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [rows] = await connection.query(`SELECT * FROM ${tabla}`);
       return rows;
     } catch (error) {
-      throw new Error(`ERROR: al obtener ${tabla}`);
+      throw new Error(`ERROR: al obtener ${tabla}: ${error.message}`);
     }
   }
-  async getvariasById(id, tabla) {
+
+  async getById(id, tabla) {
+    if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [rows] = await connection.query(
         `SELECT * FROM ${tabla} WHERE id = ?`,
         [id]
       );
-      if (rows.length === 0) {
-        // Retorna un array vacío si no se encuentra la categoría
-        return [];
-      }
-      // Retorna la categoría encontrada
+      if (rows.length === 0) return null;
       return rows[0];
     } catch (error) {
-      throw new Error(`Error al obtener la elemento de ${tabla}`);
+      throw new Error(`Error al obtener elemento de ${tabla}: ${error.message}`);
     }
   }
 
   async create(nombre, tabla) {
+    if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [result] = await connection.query(
         `INSERT INTO ${tabla} (nombre) VALUES (?)`,
@@ -51,11 +37,12 @@ class Tablas {
       );
       return { id: result.insertId, nombre };
     } catch (error) {
-      throw new Error(`ERROR: Al crear el/la ${tabla}`);
+      throw new Error(`ERROR: Al crear el/la ${tabla}: ${error.message}`);
     }
   }
 
-  async update(nombre,tabla, id) {
+  async update(nombre, tabla, id) {
+    if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [result] = await connection.query(
         `UPDATE ${tabla} SET nombre = ? WHERE id = ?`,
@@ -64,32 +51,18 @@ class Tablas {
       if (result.affectedRows === 0) throw new Error(`Elemento de ${tabla} no encontrado`);
       return { id, nombre };
     } catch (error) {
-      throw new Error(`ERROR: Al actualizar`);
+      throw new Error(`ERROR: Al actualizar el/la ${tabla}: ${error.message}`);
     }
   }
 
-//   async updateParcial( nombre, tabla, id) {
-//     try {
-//       let sql = `UPDATE ${tabla} SET `;
-//       Object.keys(campos).forEach((campo, i, arr) => {
-//         sql += `${campo} = '${campos[campo]}'${i < arr.length - 1 ? `,` : ``}`;
-//       });
-//       sql += ` WHERE id = ${id}`;
-//       const [result] = await connection.query(sql);
-//       if (result.affectedRows === 0) throw new Error(`Elemento de ${tabla} no encontrado`);
-//       return { mensaje: `Usuario actualizado` };
-//     } catch (error) {
-//       throw new Error(`ERROR: Al actualizar parcialmente el usuario`);
-//     }
-//   }
-
   async delete(id, tabla) {
+    if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [result] = await connection.query(`DELETE FROM ${tabla} WHERE id = ?`, [id]);
       if (result.affectedRows === 0) throw new Error(`Elemento de ${tabla} no encontrado`);
-      return { mensaje: `Usuario eliminado con éxito` };
+      return { mensaje: `Elemento eliminado con éxito de ${tabla}` };
     } catch (error) {
-      throw new Error(`ERROR: Al eliminar el usuario`);
+      throw new Error(`ERROR: Al eliminar el/la ${tabla}: ${error.message}`);
     }
   }
 }

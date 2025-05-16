@@ -1,47 +1,71 @@
-import tablas from "../models/tablas.js";
-const tabla= "generos";
-class tablasController {
-  static getAlltablas = async (req, res) => {
-    const OBJtablas = new tablas();
-    const tablas = await OBJtablas.getAll();
-    res.json(tablas);
+import TablasModel from "../models/tablas.js";
+
+class TablasController {
+  constructor(tabla) {
+    this.tabla = tabla;
+
+    // Bind para no perder el contexto al pasar como middleware
+    this.getAll = this.getAll.bind(this);
+    this.getById = this.getById.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
-  static createtablas = async (req, res) => {
+  async getAll(req, res) {
     try {
-      const { nombre, tabla } = req.body;
-      const OBJtablas = new tablas();
-      const tablasCreado = await OBJtablas.create(nombre, tabla);
-      res.status(201).json(tablasCreado);
+      const model = new TablasModel(this.tabla);
+      const datos = await model.getAll();
+      res.json(datos);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
 
-  static updatetablas = async (req, res) => {
+  async getById(req, res) {
+    try {
+      const { id } = req.params;
+      const model = new TablasModel(this.tabla);
+      const datos = await model.getById(id);
+      res.json(datos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async create(req, res) {
+    try {
+      const { nombre } = req.body;
+      const model = new TablasModel(this.tabla);
+      const nuevo = await model.create(nombre);
+      res.status(201).json(nuevo);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async update(req, res) {
     try {
       const { id } = req.params;
       const { nombre } = req.body;
-      const OBJtablas = new tablas();
-      const tablasActualizado = await OBJtablas.update(nombre, tabla, id);
-      res.status(201).json(tablasActualizado);
+      const model = new TablasModel(this.tabla);
+      const actualizado = await model.update(id, nombre);
+      res.status(200).json(actualizado);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
 
-
-
-  static deletetablas = async (req, res) => {
+  async delete(req, res) {
     try {
       const { id } = req.params;
-      const OBJtablas = new tablas();
-      const tablasEliminado = await OBJtablas.delete(id, tabla);
-      res.status(201).json(tablasEliminado);
+      const model = new TablasModel(this.tabla);
+      const eliminado = await model.delete(id);
+      res.status(200).json(eliminado);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
 }
 
-export default tablasController;
+export default TablasController;
