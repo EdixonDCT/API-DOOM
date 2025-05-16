@@ -1,10 +1,12 @@
 import connection from "../utils/database.js";
 
-const tablasPermitidas = ["usuarios", "generos", "ciudades", "lenguajes"];
+const tablasPermitidas = ["generos", "ciudades", "lenguajes"];
 
 
 class Tablas {
-  async getAll(tabla) {
+  async getAllTabla(tabla) {
+    console.log(tabla +"modelo");
+    
     if (!tablasPermitidas.includes(tabla)) throw new Error('Tabla no permitida');
     try {
       const [rows] = await connection.query(`SELECT * FROM ${tabla}`);

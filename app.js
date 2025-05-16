@@ -14,12 +14,25 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.use("/usuarios", usuarios);
-app.use("/lenguaje_usuario", lenguaje_usuario);
-app.use("/generos", rutas_genericas("generos"));
-app.use("/ciudades", rutas_genericas("ciudades"));
-app.use("/lenguajes", rutas_genericas("lenguajes"));
+try {
+  
+  app.use("/usuarios", usuarios);
+  app.use("/lenguaje_usuario", lenguaje_usuario);
+  
+  const generos = new rutas_genericas("generos");
+  app.use("/generos",generos.rutas());
+  
+  const ciudades = new rutas_genericas("ciudades");
+  app.use("/ciudades", ciudades.rutas());
+  
+  const lenguajes = new rutas_genericas("lenguajes");
+  
+  app.use("/lenguajes", lenguajes.rutas());
+} catch (error) {
+  console.log(error);
+  
+}
+  
 
 
 const PORT = process.env.PORT || 3000;
