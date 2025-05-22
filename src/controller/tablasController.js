@@ -1,4 +1,5 @@
-import TablasModel from "../models/tablas.js";
+import { ResponseProvider } from "../providers/ResponseProvider.js";
+import TablasGenericasServices from "../services/tableServices.js";
 class TablasController {
   constructor(tabla) {
     this.tabla = tabla;
@@ -11,35 +12,81 @@ class TablasController {
   }
 
   getAll = async (req, res) => {
-    try {
-      console.log("TABLA:", this.tabla);
-      const model = new TablasModel();
-      const datos = await model.getAllTabla(this.tabla);
-      res.json(datos);
+   try {
+      // Llamamos al servicio para obtener las categorías
+      const response = await TablasGenericasServices.getAllCampos(this.tabla);   
+      // Validamos si no hay categorías
+      if (response.error) {        
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta        
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+       }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   };
 
   getById = async (req, res) => {
+    const { id } = req.params;
     try {
-      const { id } = req.params;
-      const model = new TablasModel();
-      const datos = await model.getById(id, this.tabla);
-      res.json(datos);
+      const response = await TablasGenericasServices.getTablaById(id, this.tabla);
+    if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   };
 
   create = async (req, res) => {
     try {
       const { nombre } = req.body;
-      const model = new TablasModel();
-      const nuevo = await model.create(nombre, this.tabla);
-      res.status(201).json(nuevo);
+      const response = await TablasGenericasServices.createTabla(nombre, this.tabla);
+     if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   };
 
@@ -47,22 +94,52 @@ class TablasController {
     try {
       const { id } = req.params;
       const { nombre } = req.body;
-      const model = new TablasModel();
-      const actualizado = await model.update(nombre, this.tabla, id);
-      res.status(200).json(actualizado);
+      const response = await TablasGenericasServices.updateTabla(nombre, this.tabla, id);
+    if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   };
 
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      const model = new TablasModel();
-      const eliminado = await model.delete(id, this.tabla);
-      res.status(200).json(eliminado);
+      const response = await TablasGenericasServices.deleteTabla(id, this.tabla);
+    if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   };
 }

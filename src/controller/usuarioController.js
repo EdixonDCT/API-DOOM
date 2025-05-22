@@ -93,9 +93,9 @@ class UsuarioController {
   };
 
   static updateUsuario = async (req, res) => {
+    const { id } = req.params;
+    const { nombre, apellido, documento, telefono, usuario, contrasena, id_ciudad, id_genero } = req.body;
     try {
-      const { id } = req.params;
-      const { nombre, apellido, documento, telefono, usuario, contrasena, id_ciudad, id_genero } = req.body;
       const OBJUsuario = new Usuarios();
       const usuarioActualizado = await OBJUsuario.update(nombre, apellido, documento, telefono, usuario, contrasena, id_ciudad, id_genero, id);
       res.status(201).json(usuarioActualizado);

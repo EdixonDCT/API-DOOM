@@ -1,20 +1,58 @@
 import Lenguaje_usuario from "../models/lenguaje_usuario.js";
+import lenguaje_usuarioServices from "../services/lenguaje_userServices.js";
+import { ResponseProvider } from "../providers/ResponseProvider.js";
 
 class Lenguaje_usuarioController {
   static getAllLenguajeUsuario = async (req, res) => {
-    const OBJ = new Lenguaje_usuario();
-    const resultados = await OBJ.getAll();
-    res.json(resultados);
+    try {
+      // Llamamos al servicio para obtener las categorías
+      const response = await lenguaje_usuarioServices.getAllCampos();   
+      // Validamos si no hay categorías
+      if (response.error) {        
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta        
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+       }
+    } catch (error) {
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
+    }
   }
 
   static createLenguajeUsuario = async (req, res) => {
     try {
       const { id_usuario, id_lenguaje } = req.body;
-      const OBJ = new Lenguaje_usuario();
-      const creado = await OBJ.create(id_usuario, id_lenguaje);
-      res.status(201).json(creado);
+       const response = await lenguaje_usuarioServices.createTabla(id_usuario, id_lenguaje);
+     if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   }
 
@@ -22,11 +60,26 @@ class Lenguaje_usuarioController {
     try {
       const { id_usuario, id_lenguaje } = req.params;
       const { id_usuario: nuevoUsuario, id_lenguaje: nuevoLenguaje } = req.body;
-      const OBJ = new Lenguaje_usuario();
-      const actualizado = await OBJ.update(nuevoUsuario, nuevoLenguaje, id_usuario, id_lenguaje);
-      res.status(201).json(actualizado);
+      const response = await lenguaje_usuarioServices.updateTabla(nuevoUsuario, nuevoLenguaje, id_usuario, id_lenguaje);
+    if (response.error) {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.error(
+          res,
+          response.message,
+          response.code
+        );
+      } else {
+        // Llamamos el provider para centralizar los mensajes de respuesta
+        return ResponseProvider.success(
+          res,
+          response.data,
+          response.message,
+          response.code
+        );
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // Llamamos el provider para centralizar los mensajes de respuesta
+      ResponseProvider.error(res, "Error al interno en el servidor", 500);
     }
   }
 
@@ -45,12 +98,27 @@ class Lenguaje_usuarioController {
   static deleteLenguajeUsuario = async (req, res) => {
     try {
       const { id_usuario, id_lenguaje } = req.params;
-      const OBJ = new Lenguaje_usuario();
-      const eliminado = await OBJ.delete(id_usuario, id_lenguaje);
-      res.status(201).json(eliminado);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+      const response = await lenguaje_usuarioServices.delete(id_usuario, id_lenguaje);
+    if (response.error) {
+            // Llamamos el provider para centralizar los mensajes de respuesta
+            return ResponseProvider.error(
+              res,
+              response.message,
+              response.code
+            );
+          } else {
+            // Llamamos el provider para centralizar los mensajes de respuesta
+            return ResponseProvider.success(
+              res,
+              response.data,
+              response.message,
+              response.code
+            );
+          }
+        } catch (error) {
+          // Llamamos el provider para centralizar los mensajes de respuesta
+          ResponseProvider.error(res, "Error al interno en el servidor", 500);
+        }
   }
 }
 

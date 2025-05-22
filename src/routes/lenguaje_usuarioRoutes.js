@@ -5,10 +5,11 @@ import Lenguaje_usuarioController from "../controller/lenguaje_usuarioController
 const router = express.Router();
 
 router.get('/', Lenguaje_usuarioController.getAllLenguajeUsuario);
+//validarLenguaje_usuario falta middelware
 
-// router.post('/', validarLenguaje_usuario, Lenguaje_usuarioController.createLenguajeUsuario);
+router.post('/',  Lenguaje_usuarioController.createLenguajeUsuario);
 
-// router.put('/:id_usuario/:id_lenguaje', validarLenguaje_usuario, Lenguaje_usuarioController.updateLenguajeUsuario);
+router.put('/:id_usuario/:id_lenguaje',  Lenguaje_usuarioController.updateLenguajeUsuario);
 
 router.patch('/:id_usuario/:id_lenguaje', Lenguaje_usuarioController.updateParcialLenguajeUsuario);
 

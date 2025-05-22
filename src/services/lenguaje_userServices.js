@@ -1,12 +1,12 @@
-import Tablas from "../models/tablas.js";
+import Lenguaje_usuario from "../models/lenguaje_usuario.js";
 
-class TablasGenericasServices { 
+class lenguaje_usuarioServices { 
 
-  static async getAllCampos(tablag)
+  static async getAllCampos()
   { 
     try {
-      const TablaInstance = new Tablas();
-      const tablas = await TablaInstance.getAllTabla(tablag);
+      const TablaInstance = new Lenguaje_usuario();
+      const tablas = await TablaInstance.getAll();
       // Validamos si no hay Tablas      
       if (tablas.length === 0) {
         return {
@@ -31,37 +31,10 @@ class TablasGenericasServices {
     }
   }
 
-  static async getTablaById(id, tablag) {
+  static async createTabla( id_usuario, id_lenguaje) {
     try {
-      const TablaInstance = new Tablas();
-      const tabla = await TablaInstance.getById(id, tablag);
-      // Validamos si no hay Tablas
-      if (tabla.length === 0) {
-        return {
-          error: true,
-          code: 404,
-          message: "Tabla no encontrada",
-        };
-      }
-      return {
-        error: false,
-        code: 200,
-        message: "Tabla obtenida correctamente",
-        data: tabla,
-      };
-    } catch (error) {
-      return {
-        error: true,
-        code: 500,
-        message: "Error al obtener la Tabla",
-      };
-    }
-  }
-
-  static async createTabla( nombre, tablag) {
-    try {
-      const TablaInstance = new Tablas();
-      const tabla = await TablaInstance.create( nombre, tablag);
+      const TablaInstance = new Lenguaje_usuario();
+      const tabla = await TablaInstance.create( id_usuario, id_lenguaje);
       // Validamos si no se pudo crear la Tabla      
       if (tabla === null) {
         return {
@@ -86,20 +59,11 @@ class TablasGenericasServices {
     }
   }
 
-  static async updateTabla(id, nombre, tablag) { 
+  static async updateTabla(nuevo_usuario, nuevo_lenguaje, id_usuario, id_lenguaje) { 
     try {
-      const TablaInstance = new Tablas();
-      // Consultamos la Tabla por id
-      const TablaExistente = await TablaInstance.getById(id, tablag);
-      // Validamos si no existe la Tabla
-      if (TablaExistente.length === 0) {
-        return {
-          error: true,
-          code: 404,
-          message: "Tabla no encontrada",
-        };
-      }
-      const tabla = await TablaInstance.update(nombre,tablag,id); 
+      const TablaInstance = new Lenguaje_usuario();
+     
+      const tabla = await TablaInstance.update(nuevo_usuario, nuevo_lenguaje, id_usuario, id_lenguaje); 
       // Validamos si no se pudo actualizar la Tabla
       if (tabla === null) {
         return {
@@ -124,21 +88,10 @@ class TablasGenericasServices {
     } 
   }
 
-  static async deleteTabla(id,tablag) { 
+  static async deleteTabla(id_usuario, id_lenguaje) { 
     try {
-      const TablaInstance = new Tablas();
-      // Consultamos la Tabla por id
-      const TablaExistente = await TablaInstance.getById(id, tablag);
-      // Validamos si no existe la Tabla
-      if (TablaExistente.length === 0) {
-        return {
-          error: true,
-          code: 404,
-          message: "Tabla no encontrado",
-        };
-      }
-
-      const resultado = await TablaInstance.delete(id, tablag); 
+      const TablaInstance = new Lenguaje_usuario();
+      const resultado = await TablaInstance.delete(id_usuario, id_lenguaje); 
       // Validamos si no se pudo eliminar la Tabla
       if (resultado.error) {
         return {
@@ -152,7 +105,7 @@ class TablasGenericasServices {
         error: false,
         code: 200,
         message: "Tabla eliminada correctamente",
-        data: TablaExistente,
+        data: resultado,
       };
     } catch (error) {
       console.log(error);
@@ -167,4 +120,4 @@ class TablasGenericasServices {
 
 }
 
-export default  TablasGenericasServices;
+export default  lenguaje_usuarioServices;
