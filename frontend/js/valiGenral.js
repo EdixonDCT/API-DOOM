@@ -54,6 +54,8 @@ const subir = () => {
     .then((response) => response.json())
     .then((json) => console.log(json));
 }
+
+
 formulario.addEventListener("submit", validar);
 nombre.addEventListener("keydown", letras);
 nombre.addEventListener("blur", limpiar);

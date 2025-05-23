@@ -60,12 +60,40 @@ const renderTablaGenerica = async() => {
 renderTablaGenerica();
 
 
+
+const eliminar = (id) => {
+  fetch(`http://localhost:3000/${tablaSeleccionada}/${id}`, {
+  method: 'DELETE',
+});
+}
+
+
+const editar = (id) => {
+    let nuevoNombre= prompt("ingresa el nuevo nombre");
+    console.log(nuevoNombre);
+    
+  fetch(`http://localhost:3000/${tablaSeleccionada}/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      nombre: nuevoNombre,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+}
+
 // Manejo de eventos
 window.addEventListener("click", (e) => {
     if (e.target.matches(".editar")) {
     const id = e.target.dataset.id;
     alert(`Editar ${tablaSeleccionada} con ID: ${id}`);
-    
+    if (confirm(`¿Deseas Editar la ${tablaSeleccionada} con ID ${id}?`)) {
+        editar(id);
+        
+    }
     }
 
     if (e.target.matches(".eliminar")) {
@@ -73,6 +101,7 @@ window.addEventListener("click", (e) => {
     const fila = document.querySelector(`#${tablaSeleccionada}_${id}`);
     if (confirm(`¿Deseas eliminar la ${tablaSeleccionada} con ID ${id}?`)) {
         fila.remove();
+        eliminar(id);
         
     }
     }

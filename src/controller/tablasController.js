@@ -94,7 +94,7 @@ class TablasController {
     try {
       const { id } = req.params;
       const { nombre } = req.body;
-      const response = await TablasGenericasServices.updateTabla(nombre, this.tabla, id);
+      const response = await TablasGenericasServices.updateTabla(id,nombre, this.tabla);
     if (response.error) {
         // Llamamos el provider para centralizar los mensajes de respuesta
         return ResponseProvider.error(
