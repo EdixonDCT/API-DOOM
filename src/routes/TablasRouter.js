@@ -1,6 +1,6 @@
 import express from "express";
 import TablasController from "../controller/tablasController.js";
-
+import { camposTablas } from "../middlewares/tablas/index.js";
 class rutas_genericas {
   constructor(tabla){
     this.tabla=tabla;
@@ -12,10 +12,10 @@ class rutas_genericas {
       router.get('/', controller.getAll);
       router.get('/:id', controller.getById);
     
-      router.post('/', controller.create);
+      router.post('/', camposTablas, controller.create);
     
-      router.put('/:id', controller.update);
-      router.patch('/:id', controller.update);
+      router.put('/:id',camposTablas, controller.update);
+      router.patch('/:id',camposTablas, controller.update);
     
       router.delete('/:id', controller.delete);
     

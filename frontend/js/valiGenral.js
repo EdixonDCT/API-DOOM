@@ -25,7 +25,7 @@ const letras = (event) => {
   ) {
     event.preventDefault();
   }
-  if (event.target.value.length >= 10) {
+  if (event.target.value.length >= 20) {
     event.preventDefault();
   }
 };
