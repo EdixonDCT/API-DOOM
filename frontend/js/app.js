@@ -1,4 +1,6 @@
-import {esValido} from "./modulo.js";
+import { esValido } from "./modulo.js";
+import { data } from "./formAuto.js"
+data;
 //Variables
 const formulario = document.querySelector("form");
 const nombre = document.querySelector("[name=nombre]");
@@ -8,12 +10,10 @@ const ciudad = document.querySelector("[name=ciudad]");
 const documento = document.querySelector("[name=documento]");
 const usuario = document.querySelector("[name=usuario]");
 const contrasena = document.querySelector("[name=contrasena]");
-const lenguajes = document.querySelectorAll('[name="lenguaje[]"]');
-const generos = document.querySelectorAll("[name=genero]");
 const politicas = document.querySelector("[name=politicas]");
 const boton = document.querySelector("#btn_validar");
-
 const usuarios = document.querySelector("#usuarios");
+
 //Funciones
 const validar = (event) => {
   const valores = [nombre, apellido, telefono, documento, usuario, contrasena,];
@@ -41,7 +41,9 @@ const validar = (event) => {
       valores[x].insertAdjacentElement("afterend", aviso);
     }
     // else formulario.addEventListener("submit", esValido);
-  }
+  } 
+  const lenguajes = document.querySelectorAll('[name="lenguaje[]"]');
+  const generos = document.querySelectorAll("[name=genero]");
   if (ciudad.selectedIndex == 0) {
     if (mensaje == "Ingrese correctamente: ") {
       mensaje += " " + ciudad.name;

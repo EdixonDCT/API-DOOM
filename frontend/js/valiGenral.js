@@ -42,7 +42,17 @@ const limpiar = (event) => {
 const subir = () => {
   const obj = {};
   obj[nombre.id] = nombre.value;
-  console.log(obj);
+  fetch(`http://localhost:3000/${nombre.id}`, {
+    method: "POST",
+    body: JSON.stringify({
+      nombre: nombre.value,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 }
 formulario.addEventListener("submit", validar);
 nombre.addEventListener("keydown", letras);
