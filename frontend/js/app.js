@@ -158,6 +158,25 @@ const acepta = () => {
 const isValid = (e) => {
   let data = esValido(e)
   console.log(data);
+  console.log(data.nombre+data.apellido+data.documento+data.telefono+data.usuario+data.contrasena+data.ciudad+data.genero);
+  fetch("http://localhost:3000/usuarios", {
+    method: "POST",
+    body: JSON.stringify({
+      nombre: data.nombre,
+      apellido: data.apellido,
+      documento: data.documento,
+      telefono: data.telefono,
+      usuario: data.usuario,
+      contrasena: data.contrasena,
+      id_ciudad: data.ciudad,
+      id_genero: data.genero,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 }
 //Eventos
 addEventListener("DOMContentLoaded",acepta);
