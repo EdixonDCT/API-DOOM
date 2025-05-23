@@ -3,14 +3,14 @@ let elemento = document.querySelector('#app');
 let tablaSeleccionada = elemento.getAttribute('data-id');
 
 
-const obtenerCiudades = async () => {
+const obtenerTablasGenericas = async () => {
     const res = await fetch(`http://localhost:3000/${tablaSeleccionada}`);
     const {data} = await res.json();
     return data;
 };
 
 const renderTablaGenerica = async() => {
-    let data= await obtenerCiudades();
+    let data= await obtenerTablasGenericas();
     const root = document.querySelector("#app");
     const tabla = document.createElement("table");
 
