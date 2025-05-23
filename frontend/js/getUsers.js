@@ -138,13 +138,50 @@ const data = Promise.all([
   const [usuarios, lenguajes, lengUser, generos, ciudades] = data;
   tabla(usuarios, lenguajes, lengUser, generos, ciudades);
 });
+
+
+
+const eliminar = (id) => {
+  fetch(`http://localhost:3000/usuarios/${id}`, {
+  method: 'DELETE',
+});
+}
+
+
+// const editar = (id) => {
+//     let nuevoNombre= prompt("ingresa el nuevo nombre");
+//     console.log(nuevoNombre);
+    
+//   fetch(`http://localhost:3000/usuarios/${id}`, {
+//     method: "PUT",
+//     body: JSON.stringify({
+//       nombre: nuevoNombre,
+//     }),
+//     headers: {
+//       "Content-type": "application/json; charset=UTF-8",
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((json) => console.log(json));
+// }
+
+
 window.addEventListener("click", (e) => {
   if (e.target.matches(".editar")) {
     let id = e.target.dataset.id;
-    alert(id);
+   if (confirm(`¿Deseas editar el usuario con ID ${id}?`)) {
+        // fila.remove();
+        // editar(id);
+        
+    }
   }
   if (e.target.matches(".eliminar")) {
     let id = e.target.dataset.id;
-    alert(id);
+    const fila = document.querySelector(`#usuario_${id}`);
+    if (confirm(`¿Deseas eliminar el usuario con ID ${id}?`)) {
+        fila.remove();
+        eliminar(id);
+        
+    }
   }
 });
