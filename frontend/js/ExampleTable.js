@@ -11,6 +11,8 @@ const usuarios = async () => {
 };
 
 const tabla = (posts, usuarios) => {
+  console.log(posts);
+  
   const root = document.querySelector("#app");
   const tabla = document.createElement("table");
   const header = document.createElement("thead");

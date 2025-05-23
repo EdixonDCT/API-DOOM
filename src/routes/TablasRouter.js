@@ -8,7 +8,6 @@ class rutas_genericas {
       const router = express.Router();
       const controller = new TablasController(this.tabla);
       
-      
       router.get('/', controller.getAll);
       router.get('/:id', controller.getById);
     
